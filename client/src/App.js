@@ -1,10 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './App.css';
-import NamePicker from './components/namePicker';
+import NamePicker from './components/namePicker/NamePicker';
 
-class App extends Component {
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {modalOpen: true};
+    }
+
     render() {
-        return <NamePicker/>
+        return <NamePicker
+            modalOpen={this.state.modalOpen}
+            onNamePicked={this.onNamePicked}/>
+    }
+
+    onNamePicked = () => {
+        this.setState({modalOpen: false});
     }
 }
 
