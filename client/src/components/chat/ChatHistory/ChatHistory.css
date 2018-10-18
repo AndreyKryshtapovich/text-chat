@@ -1,0 +1,8 @@
+.history-page {
+    background-color: #eaeaea;
+    padding: 15px;
+    height: 420px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}

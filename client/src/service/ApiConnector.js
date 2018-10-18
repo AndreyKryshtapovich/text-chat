@@ -15,6 +15,7 @@ class ApiConnector {
         this.stompClient = Stomp.over(() => {
             return new SockJS(API_URL)
         });
+        this.stompClient.reconnect_delay = 1000;
         this.stompClient.activate();
     }
 

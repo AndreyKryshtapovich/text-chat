@@ -1,21 +1,35 @@
 import React from 'react';
 import './App.css';
 import NamePicker from './components/namePicker/NamePicker';
+import Chat from './components/chat/Chat';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {modalOpen: true};
+        this.state = {modalOpen: true, messages: []};
     }
 
     render() {
-        return <NamePicker
-            modalOpen={this.state.modalOpen}
-            onNamePicked={this.onNamePicked}/>
+        const chat = this.state.modalOpen ? '' : <Chat messages={this.state.messages}/>;
+        return (
+            <div>
+                <NamePicker
+                    modalOpen={this.state.modalOpen}
+                    onNamePicked={this.onNamePicked}
+                    onMessageReceived={this.onMessageReceived}/>
+                {chat}
+            </div>
+        );
     }
 
     onNamePicked = () => {
         this.setState({modalOpen: false});
+    };
+
+    onMessageReceived = (payload) => {
+        let messages = this.state.messages;
+        messages.push(JSON.parse(payload.body));
+        this.setState({messages});
     }
 }
 

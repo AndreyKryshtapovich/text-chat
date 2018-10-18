@@ -1,0 +1,9 @@
+export const MESSAGE_TYPES = {
+    JOIN: 'JOIN',
+    LEAVE: 'LEAVE',
+    CHAT: 'CHAT',
+};
+
+export const ERROR_MESSAGES = {
+    SERVER_UNAVAILABLE_MSG: 'Ooops...! Seems server is unavailable. Try again later.',
+};

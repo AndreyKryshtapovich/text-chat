@@ -9,9 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ErrorMessage from './ErrorMessage'
 import ApiService from '../../service/ApiService'
 import './NamePicker.css'
-
-
-const SERVER_UNAVAILABLE_MSG = 'Ooops...! Seems server is unavailable. Try again later.';
+import {ERROR_MESSAGES} from '../../common/Constants';
 
 class NamePicker extends React.Component {
     constructor(props) {
@@ -24,7 +22,8 @@ class NamePicker extends React.Component {
             <Dialog open={this.props.modalOpen}>
                 <DialogTitle>Who are you ?</DialogTitle>
                 <DialogContent className='dialog-content'>
-                    <ErrorMessage showError={this.state.serverUnavailable} errorMessage={SERVER_UNAVAILABLE_MSG}/>
+                    <ErrorMessage showError={this.state.serverUnavailable}
+                                  errorMessage={ERROR_MESSAGES.SERVER_UNAVAILABLE_MSG}/>
                     <TextField
                         id="name"
                         autoFocus={true}
@@ -55,7 +54,7 @@ class NamePicker extends React.Component {
         if (!userName) {
             return;
         }
-        ApiService.onInitialConnection(userName);
+        ApiService.onInitialConnection(userName, this.props.onMessageReceived);
         this.props.onNamePicked();
     };
 
@@ -67,6 +66,7 @@ class NamePicker extends React.Component {
 NamePicker.propTypes = {
     modalOpen: PropTypes.bool.isRequired,
     onNamePicked: PropTypes.func.isRequired,
+    onMessageReceived: PropTypes.func.isRequired,
 };
 
 export default NamePicker
