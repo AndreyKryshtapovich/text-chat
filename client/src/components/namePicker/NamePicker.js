@@ -6,31 +6,37 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ErrorMessage from './ErrorMessage'
 import ApiService from '../../service/ApiService'
 import './NamePicker.css'
-import {ERROR_MESSAGES} from '../../common/Constants';
+import UserNameValidator from "../../service/validator/UserNameValidator";
+import ErrorMessages from "../ErrorMessage/ErrorMessages";
 
 class NamePicker extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {serverUnavailable: false};
+        this.state = {username: '', showErrors: false};
     }
 
     render() {
+        const {showErrors, username} = this.state;
+
+        if (showErrors) {
+            UserNameValidator.validate(username);
+        }
         return (
             <Dialog open={this.props.modalOpen}>
                 <DialogTitle>Who are you ?</DialogTitle>
                 <DialogContent className='dialog-content'>
-                    <ErrorMessage showError={this.state.serverUnavailable}
-                                  errorMessage={ERROR_MESSAGES.SERVER_UNAVAILABLE_MSG}/>
+                    <ErrorMessages errorMessages={UserNameValidator.getErrors()}/>
                     <TextField
                         id="name"
                         autoFocus={true}
+                        value={username}
                         label="Nickname"
                         fullWidth={true}
                         required={true}
                         onChange={this.handleNameChange}
+                        error={UserNameValidator.hasErrors()}
                     />
                     <DialogActions>
                         <Button
@@ -45,21 +51,18 @@ class NamePicker extends React.Component {
     }
 
     onInitialConnection = () => {
-        const serverUnavailable = !ApiService.isConnected();
-        if (serverUnavailable) {
-            this.setState({serverUnavailable: true});
-            return;
+        this.setState({showErrors: true});
+        const {username} = this.state;
+        UserNameValidator.validate(username);
+        if (!UserNameValidator.hasErrors()) {
+            ApiService.onInitialConnection(username, this.props.onMessageReceived);
+            this.props.onNamePicked();
         }
-        const userName = this.state.userName;
-        if (!userName) {
-            return;
-        }
-        ApiService.onInitialConnection(userName, this.props.onMessageReceived);
-        this.props.onNamePicked();
     };
 
+
     handleNameChange = (event) => {
-        this.setState({userName: event.target.value});
+        this.setState({username: event.target.value});
     };
 }
 
