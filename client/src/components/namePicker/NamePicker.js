@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import ApiService from '../../service/ApiService'
 import './NamePicker.css'
 import UserNameValidator from "../../service/validator/UserNameValidator";
-import ErrorMessages from "../ErrorMessage/ErrorMessages";
+import ErrorMessages from "../errorMessage/ErrorMessages";
 
 class NamePicker extends React.Component {
     constructor(props) {
