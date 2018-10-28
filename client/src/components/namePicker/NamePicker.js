@@ -26,7 +26,7 @@ class NamePicker extends React.Component {
         return (
             <Dialog open={this.props.modalOpen}>
                 <DialogTitle>Who are you ?</DialogTitle>
-                <DialogContent className='dialog-content'>
+                <DialogContent className="dialog-content">
                     <ErrorMessages errorMessages={UserNameValidator.getErrors()}/>
                     <TextField
                         id="name"

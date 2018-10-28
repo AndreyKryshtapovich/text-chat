@@ -1,17 +1,17 @@
 package com.bsu.textchat.config;
 
+import com.bsu.textchat.dao.UserDAO;
 import com.bsu.textchat.model.Message;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-
-import java.util.Map;
+import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 @Component
 public class WebSocketEventListener {
@@ -20,27 +20,26 @@ public class WebSocketEventListener {
 
   @Autowired private SimpMessageSendingOperations messagingTemplate;
 
+  @Autowired private UserDAO userDAO;
+  @Autowired private ObjectMapper mapper;
+
   @EventListener
-  public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-    logger.info("Received a new web socket connection");
+  public void handleWebSocketConnectListener(SessionSubscribeEvent event)
+      throws JsonProcessingException {
+    Message infoMsg = new Message();
+    infoMsg.setType(Message.MessageType.ALL_USERS);
+    infoMsg.setContent(mapper.writeValueAsString(userDAO.getAllUsers()));
+
+    messagingTemplate.convertAndSend("/topic/public", infoMsg);
   }
 
   @EventListener
   public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-    StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-    Map<String, Object> sessionAttrs = headerAccessor.getSessionAttributes();
-    if (sessionAttrs == null) {
-      return;
-    }
-    String username = (String) sessionAttrs.get("username");
-    if (username == null) {
-      return;
-    }
-    logger.info("User Disconnected : " + username);
-
+    String userName = userDAO.getUserById(event.getSessionId());
+    userDAO.removeUser(event.getSessionId());
     Message chatMessage = new Message();
     chatMessage.setType(Message.MessageType.LEAVE);
-    chatMessage.setSender(username);
+    chatMessage.setSender(userName);
 
     messagingTemplate.convertAndSend("/topic/public", chatMessage);
   }
