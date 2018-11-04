@@ -10,7 +10,7 @@ class App extends React.Component {
     }
 
     render() {
-        const chat = this.state.modalOpen ? '' : <Chat messages={this.state.messages}/>;
+        const chat = this.state.modalOpen ? '' : <Chat messages={this.state.messages} currentUser={this.state.username}/>;
         return (
             <div>
                 <NamePicker
@@ -22,8 +22,8 @@ class App extends React.Component {
         );
     }
 
-    onNamePicked = () => {
-        this.setState({modalOpen: false});
+    onNamePicked = (username) => {
+        this.setState({username: username, modalOpen: false});
     };
 
     onMessageReceived = (payload) => {

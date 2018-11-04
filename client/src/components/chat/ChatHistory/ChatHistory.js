@@ -21,7 +21,7 @@ class ChatHistory extends React.Component {
         } else if (MESSAGE_TYPES.LEAVE === message.type) {
             return `${message.sender} left.`;
         } else {
-            return message.content;
+            return `${message.sender}: ${message.content}`;
         }
     };
 }

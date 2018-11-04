@@ -7,14 +7,25 @@ const ADD_USER_URL = '/app/chat.addUser';
 class ApiService {
 
     onInitialConnection = (username, onMessageReceived) => {
-        if (!ApiConnector.isConnected()) {
+        const connector = ApiConnector.getConnector();
+        if(!connector) {
             return;
         }
-        const connector = ApiConnector.getConnector();
         this.subscribe(PUBLIC_TOPIC, connector, onMessageReceived);
         connector.send(ADD_USER_URL,
             {},
             JSON.stringify({sender: username, type: MESSAGE_TYPES.JOIN})
+        )
+    };
+
+    send = (username, text) => {
+        const connector = ApiConnector.getConnector();
+        if(!connector) {
+            return;
+        }
+        connector.send(ADD_USER_URL,
+            {},
+            JSON.stringify({sender: username, type: MESSAGE_TYPES.CHAT, content: text})
         )
     };
 
