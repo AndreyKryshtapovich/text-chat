@@ -7,17 +7,18 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import MessageValidator from "../../../service/validator/MessageValidator";
 import ErrorMessages from "../../ErrorMessage/ErrorMessages";
+import ApiService from "../../../service/ApiService";
 
 library.add(faPaperPlane);
 
-class MessageInput extends React.Component {
+class MessageSender extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: '', showErrors: false};
+        this.state = {message: '', showErrors: false, userInfo: props.userInfo};
     }
 
     render() {
-        const {message, showErrors} = this.state;
+        const {message, showErrors, userInfo} = this.state;
         if (showErrors) {
             MessageValidator.validate(message);
         }
@@ -39,13 +40,14 @@ class MessageInput extends React.Component {
     };
 
     send = () => {
-        const {message} = this.state;
+        const {message, userInfo} = this.state;
         this.setState({showErrors: true});
         MessageValidator.validate(message);
         if(!MessageValidator.hasErrors()) {
-            console.log('Send');
+            ApiService.send(userInfo, message);
+            this.setState({message: '', showErrors: false});
         }
     };
 }
 
-export default MessageInput;
+export default MessageSender;

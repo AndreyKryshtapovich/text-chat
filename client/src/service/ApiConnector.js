@@ -20,6 +20,9 @@ class ApiConnector {
     }
 
     getConnector = () => {
+        if(!this.isConnected()) {
+            return;
+        }
         return this.stompClient;
     };
 

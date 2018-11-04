@@ -26,8 +26,8 @@ class App extends React.Component {
         );
     }
 
-    onNamePicked = () => {
-        this.setState({modalOpen: false});
+    onNamePicked = (username) => {
+        this.setState({username: username, modalOpen: false});
     };
 
     onMessageReceived = (payload) => {
@@ -75,7 +75,7 @@ class App extends React.Component {
         return (
             <div>
                 <Sidebar users={this.state.users}/>
-                <Chat messages={this.state.messages}/>
+                <Chat messages={this.state.messages} currentUser={this.state.username}/>
             </div>);
     };
 }
