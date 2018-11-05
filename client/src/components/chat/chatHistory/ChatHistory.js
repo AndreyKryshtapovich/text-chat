@@ -11,7 +11,21 @@ class ChatHistory extends React.Component {
     };
 
     renderInfoMessage = (message, key) => {
+<<<<<<< HEAD:client/src/components/chat/chatHistory/ChatHistory.js
         return <div key={key}>{message.content}</div>
+=======
+        return <div key={key}>{this.getMessageText(message)}</div>
+    };
+
+    getMessageText = (message) => {
+        if (MESSAGE_TYPES.JOIN === message.type) {
+            return `${message.sender} joined.`;
+        } else if (MESSAGE_TYPES.LEAVE === message.type) {
+            return `${message.sender} left.`;
+        } else {
+            return `${message.sender}: ${message.content}`;
+        }
+>>>>>>> ea932843eef014680c86c4278427b113bdf049d5:client/src/components/chat/ChatHistory/ChatHistory.js
     };
 }
 

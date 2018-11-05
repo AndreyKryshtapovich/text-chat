@@ -14,7 +14,11 @@ class App extends React.Component {
     }
 
     render() {
+<<<<<<< HEAD
         const {modalOpen} = this.state;
+=======
+        const chat = this.state.modalOpen ? '' : <Chat messages={this.state.messages} currentUser={this.state.username}/>;
+>>>>>>> ea932843eef014680c86c4278427b113bdf049d5
         return (
             <div>
                 <NamePicker
