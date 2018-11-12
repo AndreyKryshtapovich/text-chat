@@ -1,18 +1,26 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import './ChatHistory.css'
+import {MESSAGE_TYPES} from "../../../common/Constants";
 
 class ChatHistory extends React.Component {
     render() {
         const messages = this.props.messages.map((message, key) => {
-            return this.renderInfoMessage(message, key)
+            return <div key={key}>{this.getMessageText(message)}</div>
         });
+
         return <div className="history-page">{messages}</div>;
     };
 
-    renderInfoMessage = (message, key) => {
-        return <div key={key}>{message.content}</div>
-    };
+    getMessageText = (message) => {
+        if (MESSAGE_TYPES.JOIN === message.type) {
+            return `${message.sender} joined.`;
+        } else if (MESSAGE_TYPES.LEAVE === message.type) {
+            return `${message.sender} left.`;
+        } else {
+            return `${message.sender}: ${message.content}`;
+        }
+    }
 }
 
 ChatHistory.propTypes = {

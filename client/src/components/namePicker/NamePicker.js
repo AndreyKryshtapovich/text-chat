@@ -56,10 +56,9 @@ class NamePicker extends React.Component {
         UserNameValidator.validate(username);
         if (!UserNameValidator.hasErrors()) {
             ApiService.onInitialConnection(username, this.props.onMessageReceived);
-            this.props.onNamePicked();
+            this.props.onNamePicked(username);
         }
     };
-
 
     handleNameChange = (event) => {
         this.setState({username: event.target.value});
