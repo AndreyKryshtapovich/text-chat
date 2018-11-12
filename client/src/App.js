@@ -5,7 +5,6 @@ import Chat from './components/chat/Chat';
 import Sidebar from "./components/sidebar/Sidebar";
 import Transformer from './service/transformer/Transformer';
 import {MESSAGE_TYPES} from "./common/Constants";
-import withStyles from "@material-ui/core/es/styles/withStyles";
 
 
 class App extends React.Component {
@@ -17,7 +16,7 @@ class App extends React.Component {
     render() {
         const {modalOpen} = this.state;
         return (
-            <div class="page-wrapper">
+            <div>
                 <NamePicker
                     modalOpen={modalOpen}
                     onNamePicked={this.onNamePicked}
@@ -76,7 +75,7 @@ class App extends React.Component {
     renderAppComponents = () => {
 
         return (
-            <div class="main-page-wrapper">
+            <div>
                 <Sidebar users={this.state.users}/>
                 <Chat messages={this.state.messages} currentUser={this.state.currentUser}/>
             </div>);

@@ -1,4 +1,3 @@
-import ApiService from "../ApiService";
 import {ERROR_MESSAGES} from "../../common/Constants";
 
 class MessageValidator {

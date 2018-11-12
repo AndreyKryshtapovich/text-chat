@@ -1,40 +1,61 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import MessageValidator from "../../../service/validator/MessageValidator";
 import ApiService from "../../../service/ApiService";
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import ErrorMessages from "../../errorMessage/ErrorMessages";
-import './MessageSender.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
 library.add(faPaperPlane);
 
 class MessageSender extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: '', showErrors: false, userInfo: props.userInfo};
-        console.log(this.state);
+        this.state = {
+            message: '',
+            showErrors: false,
+        };
     }
 
     render() {
-        const {message, showErrors, userInfo} = this.state;
+        const {message, showErrors} = this.state;
+        const styles = {
+            messageInput: {
+                width: '97%',
+            },
+            buttonSend: {
+                margin: '0px 20px 0px 0px',
+            }
+        };
         if (showErrors) {
             MessageValidator.validate(message);
         }
         return (
-            <div class="message-box">
-                <ErrorMessages errorMessages={MessageValidator.getErrors()}/>
-
-                <TextField id="outlined-multiline-flexible" multiline={true} rowsMax="3" margin="normal"
-                           className={"message-input"}
-                           variant="outlined" value={message} onChange={this.handleMessageChange}
-                           error={MessageValidator.hasErrors()}/>
-                <Button className={"button-send"} variant="outlined" color="primary" onClick={this.send}>
-                    <FontAwesomeIcon icon="paper-plane"/>
-                </Button>
-            </div>
+            <Grid container={true} direction="row" spacing={8} alignItems="center">
+                <Grid item={true} xs={10}>
+                    <ErrorMessages errorMessages={MessageValidator.getErrors()}/>
+                    <TextField
+                        style={styles.messageInput}
+                        multiline={true}
+                        fullWidth={true}
+                        rowsMax="3"
+                        variant="outlined"
+                        margin="dense"
+                        value={message}
+                        onChange={this.handleMessageChange}
+                        error={MessageValidator.hasErrors()}
+                    />
+                </Grid>
+                <Grid item={true} xs={2}>
+                    <IconButton color="primary" onClick={this.send} style={styles.buttonSend}>
+                        <FontAwesomeIcon icon="paper-plane"/>
+                    </IconButton>
+                </Grid>
+            </Grid>
         );
     }
 
@@ -43,7 +64,8 @@ class MessageSender extends React.Component {
     };
 
     send = () => {
-        const {message, userInfo} = this.state;
+        const {message} = this.state;
+        const {userInfo} = this.props;
         this.setState({showErrors: true});
         MessageValidator.validate(message);
         if (!MessageValidator.hasErrors()) {
@@ -52,5 +74,9 @@ class MessageSender extends React.Component {
         }
     };
 }
+
+MessageSender.propTypes = {
+    userInfo: PropTypes.string.isRequired,
+};
 
 export default MessageSender;
