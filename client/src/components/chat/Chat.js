@@ -1,14 +1,16 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
+import MessageSender from './messageSender/MessageSender'
 import ChatHistory from './chatHistory/ChatHistory'
 import './Chat.css'
 
 class Chat extends React.Component {
     render() {
         return (
-            <Paper className="chat-paper" zdepth={2}>
+            <div className="chat-paper">
                 <ChatHistory messages={this.props.messages}/>
-            </Paper>);
+                <MessageSender userInfo={this.props.currentUser}/>
+            </div>);
     }
 }
 

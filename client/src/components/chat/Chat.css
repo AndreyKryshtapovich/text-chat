@@ -1,7 +1,5 @@
 .chat-paper {
-    height: 500px;
-    width: 500px;
+    padding-left: 300px;
     text-align: center;
-    margin: 20px auto;
-    position: relative;
+    height: 100%;
 }
