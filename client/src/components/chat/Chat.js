@@ -8,7 +8,10 @@ class Chat extends React.Component {
     render() {
         return (
             <Paper className="chat-paper" zdepth={2}>
-                <ChatHistory messages={this.props.messages}/>
+                <ChatHistory
+                    messages={this.props.messages}
+                    userInfo={this.props.currentUser}
+                />
                 <MessageSender userInfo={this.props.currentUser}/>
             </Paper>);
     }

@@ -26,9 +26,10 @@ class MessageSender extends React.Component {
         const styles = {
             messageInput: {
                 width: '97%',
+                marginLeft: '5px',
             },
             buttonSend: {
-                margin: '0px 20px 0px 0px',
+                marginRight: '20px',
             }
         };
         if (showErrors) {
