@@ -1,8 +1,10 @@
 export const MESSAGE_TYPES = {
     JOIN: 'JOIN',
-    LEAVE: 'LEAVE',
+    LEAVE_CHAT: 'LEAVE_CHAT',
+    LEAVE_TOPIC: 'LEAVE_TOPIC',
     CHAT: 'CHAT',
     ALL_USERS: 'ALL_USERS',
+    ALL_TOPICS: 'ALL_TOPICS',
 };
 
 export const ERROR_MESSAGES = {
@@ -13,5 +15,5 @@ export const ERROR_MESSAGES = {
 
 export const TABS = {
     USERS_TAB: 'USERS',
-    ROOMS_TAB: 'ROOMS',
+    TOPICS_TAB: 'TOPICS',
 };

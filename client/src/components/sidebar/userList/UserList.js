@@ -7,13 +7,21 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 class UserList extends React.Component {
     render() {
+        const {users, currentUser} = this.props;
+
         return (
-            this.props.users.map((userName, key) => {
+            users.map((userName, key) => {
                 const avatarLabel = userName.slice(0, 2).toLocaleUpperCase();
+                let backgroundColor = userName === currentUser ? 'blue' : 'green';
+                const style = {
+                    backgroundColor: backgroundColor,
+                    color: 'white',
+                };
+
                 return <ListItem key={key}>
                     <ListItemIcon>
                         <Avatar
-                            style={{backgroundColor: 'green', color: 'white'}}
+                            style={style}
                             children={avatarLabel}/>
                     </ListItemIcon>
                     <ListItemText>{userName}</ListItemText>
@@ -24,7 +32,8 @@ class UserList extends React.Component {
 }
 
 UserList.propTypes = {
-    users: PropTypes.arrayOf(PropTypes.string).isRequired
+    users: PropTypes.arrayOf(PropTypes.string).isRequired,
+    currentUser: PropTypes.string.isRequired,
 };
 
 export default UserList;

@@ -6,32 +6,59 @@ const ADD_USER_URL = '/app/chat.addUser';
 const SEND_MSG_URL = '/app/chat.sendMessage';
 
 class ApiService {
+    constructor() {
+        this.subscription = null;
+        this.topic = '';
+    }
 
     onInitialConnection = (username, onMessageReceived) => {
+        this.subscribeToTopic(username, PUBLIC_TOPIC, onMessageReceived);
+    };
+
+    subscribeToTopic = (username, topic, onMessageReceived) => {
         const connector = ApiConnector.getConnector();
-        if(!connector) {
+        if (!connector) {
             return;
         }
-        this.subscribe(PUBLIC_TOPIC, connector, onMessageReceived);
-        connector.send(ADD_USER_URL,
-            {},
-            JSON.stringify({sender: username, type: MESSAGE_TYPES.JOIN})
-        );
+        this.subscribe(topic, connector, onMessageReceived);
+        this.sendUserJoinedMessage(connector, username);
     };
 
     send = (username, text) => {
         const connector = ApiConnector.getConnector();
-        if(!connector) {
+        if (!connector) {
             return;
         }
         connector.send(SEND_MSG_URL,
             {},
-            JSON.stringify({sender: username, type: MESSAGE_TYPES.CHAT, content: text})
+            JSON.stringify({sender: username, type: MESSAGE_TYPES.CHAT, content: text, topic: this.topic})
         );
     };
 
-    subscribe = (channel, connector, onMessageReceived) => {
-        connector.subscribe(channel, onMessageReceived);
+    subscribe = (topic, connector, onMessageReceived) => {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        this.topic = topic;
+        this.subscription = connector.subscribe(topic, onMessageReceived);
+    };
+
+    sendUserJoinedMessage = (connector, username) => {
+        connector.send(ADD_USER_URL,
+            {},
+            JSON.stringify({sender: username, type: MESSAGE_TYPES.JOIN, topic: this.topic})
+        );
+    };
+
+    sendUserLeaveTopicMessage = (username) => {
+        const connector = ApiConnector.getConnector();
+        if (!connector) {
+            return;
+        }
+        connector.send(SEND_MSG_URL,
+            {},
+            JSON.stringify({sender: username, type: MESSAGE_TYPES.LEAVE_TOPIC, topic: this.topic})
+        );
     };
 
     isConnected = () => {

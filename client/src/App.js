@@ -5,6 +5,7 @@ import Chat from './components/chat/Chat';
 import Sidebar from "./components/sidebar/Sidebar";
 import Transformer from './service/transformer/Transformer';
 import {MESSAGE_TYPES} from "./common/Constants";
+import ApiService from "./service/ApiService";
 
 
 class App extends React.Component {
@@ -35,12 +36,14 @@ class App extends React.Component {
         const message = Transformer.transformMessage(payload);
         if (MESSAGE_TYPES.JOIN === message.type) {
             this.processUserJoined(message);
-        } else if (MESSAGE_TYPES.LEAVE === message.type) {
+        } else if (MESSAGE_TYPES.LEAVE_CHAT === message.type) {
             this.processUserLeft(message)
-        } else if (MESSAGE_TYPES.CHAT === message.type) {
+        } else if (MESSAGE_TYPES.CHAT === message.type || MESSAGE_TYPES.LEAVE_TOPIC === message.type) {
             this.addMessage(message);
         } else if (MESSAGE_TYPES.ALL_USERS === message.type) {
             this.setState({users: JSON.parse(message.content)});
+        } else if (MESSAGE_TYPES.ALL_TOPICS === message.type) {
+            this.setState({topics: JSON.parse(message.content)});
         }
     };
 
@@ -62,8 +65,10 @@ class App extends React.Component {
 
     addUser = (userName) => {
         let users = this.state.users;
-        users.push(userName);
-        this.setState({users});
+        if (!users.includes(userName)) {
+            users.push(userName);
+            this.setState({users});
+        }
     };
 
     addMessage = (message) => {

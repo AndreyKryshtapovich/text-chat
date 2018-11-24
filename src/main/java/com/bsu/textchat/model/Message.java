@@ -5,13 +5,7 @@ public class Message {
   private MessageType type;
   private String content;
   private String sender;
-
-  public enum MessageType {
-    CHAT,
-    JOIN,
-    LEAVE,
-    ALL_USERS
-  }
+  private String topic;
 
   public MessageType getType() {
     return type;
@@ -35,5 +29,22 @@ public class Message {
 
   public void setSender(String sender) {
     this.sender = sender;
+  }
+
+  public String getTopic() {
+    return topic;
+  }
+
+  public void setTopic(String topic) {
+    this.topic = topic;
+  }
+
+  public enum MessageType {
+    CHAT,
+    JOIN,
+    LEAVE_CHAT,
+    LEAVE_TOPIC,
+    ALL_USERS,
+    ALL_TOPICS
   }
 }

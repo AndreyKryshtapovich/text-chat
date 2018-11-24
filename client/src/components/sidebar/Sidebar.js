@@ -6,6 +6,7 @@ import Drawer from "@material-ui/core/Drawer/Drawer";
 import {TABS} from '../../common/Constants';
 import PropTypes from 'prop-types';
 import UserList from "./userList/UserList";
+import TopicList from "./topicList/TopicList";
 
 class Sidebar extends React.Component {
     constructor(props) {
@@ -19,10 +20,14 @@ class Sidebar extends React.Component {
                 <AppBar position="static" color="primary">
                     <Tabs value={this.state.tabIndex} onChange={this.handleTabChange}>
                         <Tab label={TABS.USERS_TAB}/>
-                        <Tab label={TABS.ROOMS_TAB}/>
+                        <Tab label={TABS.TOPICS_TAB}/>
                     </Tabs>
                 </AppBar>
-                {this.state.tabIndex === 0 && <UserList users={this.props.users}/>}
+                {this.state.tabIndex === 0 &&
+                <UserList users={this.props.users} currentUser={this.props.currentUser}/>}
+                {this.state.tabIndex === 1 &&
+                <TopicList topics={this.props.topics} onTopicChanged={this.props.onTopicChanged}/>
+                }
             </Drawer>
         );
     }
@@ -33,7 +38,13 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-    users: PropTypes.arrayOf(PropTypes.string).isRequired
+    users: PropTypes.arrayOf(PropTypes.string).isRequired,
+    topics: PropTypes.arrayOf(PropTypes.shape({
+        displayName: PropTypes.string,
+        topicId: PropTypes.string,
+    })).isRequired,
+    currentUser: PropTypes.string.isRequired,
+    onTopicChanged: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
