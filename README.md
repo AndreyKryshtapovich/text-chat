@@ -1,5 +1,5 @@
 # Chat Application
-Project designed and implemented for master's degree course "Enterprise Software Engineering" at Belarussian State University by Andrei Kryshtapovich and Masha Bystrova.
+Project designed and implemented for master's degree course "Enterprise Software Engineering" at Belarussian State University by Andrei Kryshtapovich and Maryia Bystrova.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
