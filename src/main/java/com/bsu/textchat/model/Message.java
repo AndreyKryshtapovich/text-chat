@@ -10,7 +10,8 @@ public class Message {
     CHAT,
     JOIN,
     LEAVE,
-    ALL_USERS
+    ALL_USERS,
+    USERNAME_OCCUPIED
   }
 
   public MessageType getType() {

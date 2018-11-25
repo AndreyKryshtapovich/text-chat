@@ -4,7 +4,7 @@ import NamePicker from './components/namePicker/NamePicker';
 import Chat from './components/chat/Chat';
 import Sidebar from "./components/sidebar/Sidebar";
 import Transformer from './service/transformer/Transformer';
-import {MESSAGE_TYPES} from "./common/Constants";
+import {ERROR_MESSAGES, MESSAGE_TYPES} from "./common/Constants";
 
 
 class App extends React.Component {
@@ -33,6 +33,7 @@ class App extends React.Component {
 
     onMessageReceived = (payload) => {
         const message = Transformer.transformMessage(payload);
+        console.log(message.type);
         if (MESSAGE_TYPES.JOIN === message.type) {
             this.processUserJoined(message);
         } else if (MESSAGE_TYPES.LEAVE === message.type) {
@@ -41,6 +42,11 @@ class App extends React.Component {
             this.addMessage(message);
         } else if (MESSAGE_TYPES.ALL_USERS === message.type) {
             this.setState({users: JSON.parse(message.content)});
+        } else if (MESSAGE_TYPES.USERNAME_OCCUPIED === message.type) {
+
+            this.setState({modalOpen: true});
+            this.setState({currentUser: ''});
+            this.setState({errorMessage: [ERROR_MESSAGES.SERVER_UNAVAILABLE_MSG]})
         }
     };
 

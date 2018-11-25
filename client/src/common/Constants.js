@@ -3,6 +3,7 @@ export const MESSAGE_TYPES = {
     LEAVE: 'LEAVE',
     CHAT: 'CHAT',
     ALL_USERS: 'ALL_USERS',
+    USERNAME_OCCUPIED: 'USERNAME_OCCUPIED',
 };
 
 export const ERROR_MESSAGES = {

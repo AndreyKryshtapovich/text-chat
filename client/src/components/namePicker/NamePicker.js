@@ -28,6 +28,7 @@ class NamePicker extends React.Component {
                 <DialogTitle>Who are you ?</DialogTitle>
                 <DialogContent className="dialog-content">
                     <ErrorMessages errorMessages={UserNameValidator.getErrors()}/>
+                    <div>{this.errorMessage}</div>
                     <TextField
                         id="name"
                         autoFocus={true}
