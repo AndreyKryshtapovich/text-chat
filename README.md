@@ -4,7 +4,7 @@ Project designed and implemented for master's degree course "Enterprise Software
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-### Prerequisites
+### Prerequirements
 Installed Maven (for command line usage).
 Installed npm and Node.js
 
@@ -27,6 +27,12 @@ Start front-end server using:
 ```
 npm start
 ```
+### Running the tests
+Run all the unit test classes.
+```
+mvn test
+```
+
 ## Patterns used
 * Dependency injection and inversion of control. Spring Beans are injected into Spring IOC container which is responsible for the objects creation, wiring the objects together, configuring these objects and handling their entire lifecycle.
 * Proxy pattern. This is a structural pattern that is used by Spring framework to generate special objects to interface the functionality of inner objects to the outer world.
