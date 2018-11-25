@@ -6,9 +6,9 @@ import java.util.Set;
 
 public interface TopicDAO {
 
-  void addUserToTopic(String topicId, String userName);
+  boolean addUserToTopic(String topicId, String userName);
 
-  void removeUserFromTopic(String topicId, String userName);
+  boolean removeUserFromTopic(String topicId, String userName);
 
   String getTopicIdByUserName(String userName);
 
