@@ -46,4 +46,4 @@ npm start
 ## Authors
 
 * **Andrei Kryshtapovich**
-* **Masha Bystrova**
+* **Maryia Bystrova**
