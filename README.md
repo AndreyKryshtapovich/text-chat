@@ -27,7 +27,7 @@ Start front-end server using:
 ```
 npm start
 ```
-### Running the tests
+## Running the tests
 Run all the unit test classes:
 ```
 mvn test
