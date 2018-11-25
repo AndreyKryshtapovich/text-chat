@@ -16,21 +16,21 @@ public class UserDAO_Impl_InMemoryTest {
 	private UserDAO_Impl_InMemory userDao;
 
 	@Test
-	public void getAllUsersTest() {
+	public void getAllUsers() {
 		assertEquals(0, userDao.getAllUsers().size());
 	}
-	
+
 	@Test
-	public void addUserTest() {
+	public void addUser() {
 		String id = "id";
 		String username = "New User";
 		assertTrue(userDao.addUser(id, username));
 		assertFalse(userDao.addUser(id, username));
 		assertEquals(1, userDao.getAllUsers().size());
 	}
-	
+
 	@Test
-	public void addUserTest_invalid() {
+	public void addUser_invalid() {
 		String id = "id";
 		String username = "New User";
 		assertFalse(userDao.addUser(id, ""));
@@ -42,16 +42,16 @@ public class UserDAO_Impl_InMemoryTest {
 		assertFalse(userDao.addUser(null, ""));
 		assertFalse(userDao.addUser("", null));
 	}
-	
+
 	@Test
-	public void removeUserTest() {
+	public void removeUser() {
 		userDao.addUser("id", "user");
 		assertTrue(userDao.removeUser("id"));
 		assertFalse(userDao.removeUser("id not used"));
 	}
-	
+
 	@Test
-	public void removeUserTest_invalid() {
+	public void removeUser_invalid() {
 		assertFalse(userDao.removeUser(""));
 		assertFalse(userDao.removeUser(null));
 	}

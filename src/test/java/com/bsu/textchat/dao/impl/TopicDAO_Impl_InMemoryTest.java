@@ -16,12 +16,12 @@ public class TopicDAO_Impl_InMemoryTest {
 	private TopicDAO_Impl_InMemory topicDao;
 
 	@Test
-	public void getAllTopicsTest() {
+	public void getAllTopics() {
 		assertEquals(3, topicDao.getAllTopics().size());
 	}
 	
 	@Test
-	public void addUserToTopicTest_existingTopic() {
+	public void addUserToTopic_existingTopic() {
 		String username = "New User";
 		assertTrue(topicDao.addUserToTopic("public", username));
 		assertTrue(topicDao.addUserToTopic("minskCity", username));
@@ -29,14 +29,14 @@ public class TopicDAO_Impl_InMemoryTest {
 	}
 	
 	@Test
-	public void addUserToTopicTest_nonexistingTopic() {
+	public void addUserToTopic_nonexistingTopic() {
 		String topic = "Topic Name";
 		String username = "New User";
 		assertFalse(topicDao.addUserToTopic(topic, username));
 	}
 
 	@Test
-	public void addUserToTopicTest_emptyParams() {
+	public void addUserToTopic_emptyParams() {
 		String topic = "public";
 		String username = "New User";
 		assertFalse(topicDao.addUserToTopic("", username));
@@ -50,14 +50,14 @@ public class TopicDAO_Impl_InMemoryTest {
 	}
 	
 	@Test
-	public void removeUserFromTopicTest_existingTopic_noUser() {
+	public void removeUserFromTopic_existingTopic_noUser() {
 		String topic = "public";
 		String username = "New User";
 		assertFalse(topicDao.removeUserFromTopic(topic, username));
 	}
 	
 	@Test
-	public void removeUserFromTopicTest_existingTopic_hasUser() {
+	public void removeUserFromTopic_existingTopic_hasUser() {
 		String topic = "public";
 		String username = "New User";
 		topicDao.addUserToTopic(topic, username);
@@ -65,14 +65,14 @@ public class TopicDAO_Impl_InMemoryTest {
 	}
 	
 	@Test
-	public void removeUserFromTopicTest_nonexistingTopic() {
+	public void removeUserFromTopic_nonexistingTopic() {
 		String topic = "Topic Name";
 		String username = "New User";
 		assertFalse(topicDao.removeUserFromTopic(topic, username));
 	}
 	
 	@Test
-	public void removeUserFromTopicTest_emptyParams() {
+	public void removeUserFromTopic_emptyParams() {
 		String topic = "public";
 		String username = "New User";
 		assertFalse(topicDao.removeUserFromTopic("", username));
@@ -86,14 +86,14 @@ public class TopicDAO_Impl_InMemoryTest {
 	}
 	
 	@Test
-	public void getTopicIdByUserNameTest_invalidCases() {
+	public void getTopicIdByUserName_invalidCases() {
 		String username = "New User";
 		assertEquals("", topicDao.getTopicIdByUserName(username));
 		assertEquals("", topicDao.getTopicIdByUserName(""));
 	}
 	
 	@Test
-	public void getTopicIdByUserNameTest_validCases() {
+	public void getTopicIdByUserName_validCases() {
 		String topic = "public";
 		String username = "New User";
 		topicDao.addUserToTopic(topic, username);
