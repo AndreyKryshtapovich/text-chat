@@ -32,6 +32,7 @@ Run all the unit test classes:
 ```
 mvn test
 ```
+or just use your IDE.
 
 ## Patterns used
 * Dependency injection and inversion of control. Spring Beans are injected into Spring IOC container which is responsible for the objects creation, wiring the objects together, configuring these objects and handling their entire lifecycle.
